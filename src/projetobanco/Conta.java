@@ -11,5 +11,28 @@ package projetobanco;
 public abstract class Conta implements ContaI{
 
     
-    
+double depositoInicial; 
+int numero; 
+Cliente dono;
+double saldo;
+
+
+   
+    @Override
+    public Cliente getDono() {
+        return this.dono;
+    }
+
+    @Override
+    public int getNumero() {
+       return this.numero;
+    }
+
+    @Override
+    public double getSaldo() {
+        return this.saldo;
+    }
+
+ 
+  
 }

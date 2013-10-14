@@ -14,7 +14,7 @@ public class Cliente implements Comparable{
     private String sobrenome;
     private String RG;
     private String CPF;
-    private String Endereço;
+    private String Endereco;
     private double salario;
 
    
@@ -79,15 +79,15 @@ public class Cliente implements Comparable{
     /**
      * @return the Endereço
      */
-    public String getEndereço() {
-        return Endereço;
+    public String getEndereco() {
+        return Endereco;
     }
 
     /**
      * @param Endereço the Endereço to set
      */
-    public void setEndereço(String Endereço) {
-        this.Endereço = Endereço;
+    public void setEndereco(String Endereço) {
+        this.Endereco = Endereço;
     }
 
 
