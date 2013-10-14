@@ -1,0 +1,100 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package projetobanco;
+
+
+/**
+ *
+ * @author Codification
+ */
+public class Cliente implements Comparable{
+    private String Nome;
+    private String sobrenome;
+    private String RG;
+    private String CPF;
+    private String Endereço;
+    private double salario;
+
+   
+            
+
+    /**
+     * @return the Nome
+     */
+    public String getNome() {
+        return Nome;
+    }
+
+    /**
+     * @param Nome the Nome to set
+     */
+    public void setNome(String Nome) {
+        this.Nome = Nome;
+    }
+
+    /**
+     * @return the sobrenome
+     */
+    public String getSobrenome() {
+        return sobrenome;
+    }
+
+    /**
+     * @param sobrenome the sobrenome to set
+     */
+    public void setSobrenome(String sobrenome) {
+        this.sobrenome = sobrenome;
+    }
+
+    /**
+     * @return the RG
+     */
+    public String getRG() {
+        return RG;
+    }
+
+    /**
+     * @param RG the RG to set
+     */
+    public void setRG(String RG) {
+        this.RG = RG;
+    }
+
+    /**
+     * @return the CPF
+     */
+    public String getCPF() {
+        return CPF;
+    }
+
+    /**
+     * @param CPF the CPF to set
+     */
+    public void setCPF(String CPF) {
+        this.CPF = CPF;
+    }
+
+    /**
+     * @return the Endereço
+     */
+    public String getEndereço() {
+        return Endereço;
+    }
+
+    /**
+     * @param Endereço the Endereço to set
+     */
+    public void setEndereço(String Endereço) {
+        this.Endereço = Endereço;
+    }
+
+
+    @Override
+    public int compareTo(Object o) {
+        Cliente c = (Cliente) o;
+       return  (int) (c.salario - this.salario);
+    }
+   
+}
