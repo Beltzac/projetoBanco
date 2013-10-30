@@ -51,6 +51,7 @@ public class TelaCliente extends javax.swing.JFrame {
 
         jPopupMenu1 = new javax.swing.JPopupMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jTextField1 = new javax.swing.JTextField();
@@ -70,13 +71,21 @@ public class TelaCliente extends javax.swing.JFrame {
         jTextEndereco = new javax.swing.JTextField();
         jTextSalario = new javax.swing.JTextField();
 
-        jMenuItem1.setText("jMenuItem1");
+        jMenuItem1.setText("Nova Conta...");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
             }
         });
         jPopupMenu1.add(jMenuItem1);
+
+        jMenuItem2.setText("Gerenciar Conta...");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(jMenuItem2);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -113,17 +122,11 @@ public class TelaCliente extends javax.swing.JFrame {
 
         jLabel6.setText("Salário");
 
-        jTextNome.setText("jTextField2");
-
-        jTextRG.setText("jTextField2");
-
-        jTextSobrenome.setText("jTextField2");
-
-        jTextCPF.setText("jTextField2");
-
-        jTextEndereco.setText("jTextField2");
-
-        jTextSalario.setText("jTextField2");
+        jTextSobrenome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextSobrenomeActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -213,8 +216,22 @@ public class TelaCliente extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
-        new TelaConta("548.458.459-70").setVisible(true);
+        Cliente c = new Cliente();
+        c.setNome("João da silva");
+        c.setCPF("545.446.454-11");
+        new TelaConta(c).setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jTextSobrenomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextSobrenomeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextSobrenomeActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        Cliente c = new Cliente();
+        c.setNome("João da silva");
+        c.setCPF("545.446.454-11");
+        new TelaGerenciaConta(c).setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -261,6 +278,7 @@ public class TelaCliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
