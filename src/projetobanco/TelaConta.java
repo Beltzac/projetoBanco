@@ -4,6 +4,8 @@
  */
 package projetobanco;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Codification
@@ -20,7 +22,13 @@ public class TelaConta extends javax.swing.JFrame {
         super("Nova Conta - " + c.getNome() + " " + c.getSobrenome() + " (" + c.getCPF() + ")");
         cliente = c;
         dao = new DAO();
-        initComponents();
+        if (dao.carregaConta(c.getCodigo()) != null) {
+            JOptionPane.showMessageDialog(null, "Cliente ja possui uma conta");
+            dispose();
+        } else {
+            initComponents();
+            setVisible(true);
+        }
     }
 
     /**

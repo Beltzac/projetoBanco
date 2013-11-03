@@ -166,7 +166,7 @@ public class TelaCliente extends javax.swing.JFrame {
         });
 
         try {
-            jFormattedTextFieldRG.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###-#")));
+            jFormattedTextFieldRG.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#.###.###-#")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -287,7 +287,7 @@ public class TelaCliente extends javax.swing.JFrame {
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
 
         ModeloTabela model = (ModeloTabela) jTableClientes.getModel();
-        new TelaConta((Cliente) model.getValueAt(jTableClientes.getSelectedRow())).setVisible(true);
+        new TelaConta((Cliente) model.getValueAt(jTableClientes.getSelectedRow()));
 
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
@@ -298,7 +298,7 @@ public class TelaCliente extends javax.swing.JFrame {
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
 
         ModeloTabela model = (ModeloTabela) jTableClientes.getModel();
-        new TelaGerenciaConta((Cliente) model.getValueAt(jTableClientes.getSelectedRow())).setVisible(true);
+        new TelaGerenciaConta((Cliente) model.getValueAt(jTableClientes.getSelectedRow()));
 
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
@@ -313,8 +313,8 @@ public class TelaCliente extends javax.swing.JFrame {
         clienteSelecionado.setCPF(jFormattedTextFieldCPF.getText());
         clienteSelecionado.setEndereco(jTextEndereco.getText());
         clienteSelecionado.setSalario(Double.valueOf(jFormattedTextFieldSalario.getText()));
-
         dao.atualizaCliente(clienteSelecionado);
+        atualizaTabela();
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
     private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
@@ -335,6 +335,7 @@ public class TelaCliente extends javax.swing.JFrame {
         cliente.setEndereco(jTextEndereco.getText());
         cliente.setSalario(Double.valueOf(jFormattedTextFieldSalario.getText()));
         dao.atualizaCliente(cliente);
+        atualizaTabela();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -345,8 +346,6 @@ public class TelaCliente extends javax.swing.JFrame {
         jTextEndereco.setText("");
         jFormattedTextFieldSalario.setText("");
     }//GEN-LAST:event_jButton3ActionPerformed
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
