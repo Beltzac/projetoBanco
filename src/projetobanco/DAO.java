@@ -20,21 +20,6 @@ public class DAO {
     public DAO() { // desabilitado pra teste
        // this.connection = new ConnectionFactory().getConnection();
     }
-    /*
-     public void adicionaCliente(Cliente cliente) {
-     String sql = "insert into contatos (nome,email,endereco,dataNascimento) values (?,?,?,?)";
-     try {
-     PreparedStatement stmt = connection.prepareStatement(sql);
-     stmt.setString(1, contato.getNome());
-     stmt.setString(2, contato.getEmail());
-     stmt.setString(3, contato.getEndereco());
-     stmt.execute();
-     stmt.close();
-     } catch (SQLException e) {
-     throw new RuntimeException(e);
-     }
-     }
-     */
 
     //Apenas para testes
     public ArrayList<Cliente> pesquisaCliente(String texto) {
@@ -65,63 +50,35 @@ public class DAO {
         
         return c;
     }
-    /*
-     public void deletaCliente(String cpf) {
-     String sql = "insert into contatos (nome,email,endereco,dataNascimento) values (?,?,?,?)";
-     try {
-     PreparedStatement stmt = connection.prepareStatement(sql);
-     stmt.setString(1, contato.getNome());
-     stmt.setString(2, contato.getEmail());
-     stmt.setString(3, contato.getEndereco());
-     stmt.execute();
-     stmt.close();
-     } catch (SQLException e) {
-     throw new RuntimeException(e);
-     }
+
+
+     public Conta carregaConta(int codigoCliente) {
+         
+        return null;          
      }
        
-     public void adicionaConta(Conta conta) {
-     String sql = "insert into contatos (nome,email,endereco,dataNascimento) values (?,?,?,?)";
-     try {
-     PreparedStatement stmt = connection.prepareStatement(sql);
-     stmt.setString(1, contato.getNome());
-     stmt.setString(2, contato.getEmail());
-     stmt.setString(3, contato.getEndereco());
-     stmt.execute();
-     stmt.close();
-     } catch (SQLException e) {
-     throw new RuntimeException(e);
+     public void deletaConta(int codigoConta) {
+
      }
-     }
+
+    void atualizaConta(Conta conta) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    void atualizaCliente(Cliente cliente) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    void deletaCliente(Cliente cliente) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    void criaConta(Conta conta) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    Cliente carregaCliente(int codigoCliente) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
-     public Conta carregaConta(String cpf) {
-           
-     String sql = "insert into contatos (nome,email,endereco,dataNascimento) values (?,?,?,?)";
-     try {
-     PreparedStatement stmt = connection.prepareStatement(sql);
-     stmt.setString(1, contato.getNome());
-     stmt.setString(2, contato.getEmail());
-     stmt.setString(3, contato.getEndereco());
-     stmt.execute();
-     stmt.close();
-     } catch (SQLException e) {
-     throw new RuntimeException(e);
-     }
-     return null;
-     }
-       
-     public void deletaConta(String codigo) {
-     String sql = "insert into contatos (nome,email,endereco,dataNascimento) values (?,?,?,?)";
-     try {
-     PreparedStatement stmt = connection.prepareStatement(sql);
-     stmt.setString(1, contato.getNome());
-     stmt.setString(2, contato.getEmail());
-     stmt.setString(3, contato.getEndereco());
-     stmt.execute();
-     stmt.close();
-     } catch (SQLException e) {
-     throw new RuntimeException(e);
-     }
-     }
-     */
 }

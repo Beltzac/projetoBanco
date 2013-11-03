@@ -43,7 +43,7 @@ public class ModeloTabela extends AbstractTableModel {
             case 3:
                 return clientes.get(rowIndex).getCPF();
             case 4:
-                return clientes.get(rowIndex).getSalario();
+                return "R$ " + clientes.get(rowIndex).getSalario();
         }
         return null;
     }
@@ -52,11 +52,9 @@ public class ModeloTabela extends AbstractTableModel {
         return clientes.get(rowIndex);
 
     }
-    
+
     public void setData(ArrayList<Cliente> c) {
-         clientes = c;
-         fireTableDataChanged();
+        clientes = c;
+        fireTableDataChanged();
     }
-    
-    
 }

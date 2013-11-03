@@ -11,16 +11,17 @@ package projetobanco;
 public abstract class Conta implements ContaI{
 
     
-double depositoInicial; 
-int numero; 
-Cliente dono;
-double saldo;
+private double depositoInicial; 
+private int numero; 
+private int codigoCliente;
+private double saldo;
 
 
    
     @Override
     public Cliente getDono() {
-        return this.dono;
+        DAO dao = new DAO();
+        return dao.carregaCliente(this.codigoCliente);
     }
 
     @Override
@@ -32,6 +33,43 @@ double saldo;
     public double getSaldo() {
         return this.saldo;
     }
+
+    /**
+     * @return the depositoInicial
+     */
+    public double getDepositoInicial() {
+        return depositoInicial;
+    }
+
+    /**
+     * @param depositoInicial the depositoInicial to set
+     */
+    public void setDepositoInicial(double depositoInicial) {
+        this.depositoInicial = depositoInicial;
+    }
+
+    /**
+     * @param numero the numero to set
+     */
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
+
+    /**
+     * @param dono the dono to set
+     */
+    public void setDono(int codigoCliente) {
+        this.codigoCliente = codigoCliente;
+    }
+
+    /**
+     * @param saldo the saldo to set
+     */
+    public void setSaldo(double saldo) {
+        this.saldo = saldo;
+    }
+
+ 
 
  
   

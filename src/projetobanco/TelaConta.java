@@ -13,8 +13,13 @@ public class TelaConta extends javax.swing.JFrame {
     /**
      * Creates new form TelaConta
      */
+    DAO dao;
+    Cliente cliente;
+
     TelaConta(Cliente c) {
         super("Nova Conta - " + c.getNome() + " " + c.getSobrenome() + " (" + c.getCPF() + ")");
+        cliente = c;
+        dao = new DAO();
         initComponents();
     }
 
@@ -62,12 +67,13 @@ public class TelaConta extends javax.swing.JFrame {
 
         jLabel3.setText("Limite");
 
-        jTextFieldLimite.setEnabled(false);
-
         jLabel4.setText("Montante Mínimo");
+
+        jTextFieldMontanteMinimo.setEnabled(false);
 
         jLabel5.setText("Depósito Mínimo ");
 
+        jTextFieldDepositoMinimo.setEnabled(false);
         jTextFieldDepositoMinimo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldDepositoMinimoActionPerformed(evt);
@@ -75,6 +81,11 @@ public class TelaConta extends javax.swing.JFrame {
         });
 
         jButtonSalvar.setText("Salvar");
+        jButtonSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSalvarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -156,21 +167,36 @@ public class TelaConta extends javax.swing.JFrame {
     private void esconderCampos(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_esconderCampos
         if (evt.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
             if (evt.getItem().toString().equalsIgnoreCase("Conta Corrente")) {
-
-                jTextFieldLimite.setEnabled(false);
-
-                jTextFieldMontanteMinimo.setEnabled(true);
-                jTextFieldDepositoMinimo.setEnabled(true);
-
-
-            } else {
                 jTextFieldMontanteMinimo.setEnabled(false);
                 jTextFieldDepositoMinimo.setEnabled(false);
-
                 jTextFieldLimite.setEnabled(true);
+            } else {
+                jTextFieldLimite.setEnabled(false);
+                jTextFieldMontanteMinimo.setEnabled(true);
+                jTextFieldDepositoMinimo.setEnabled(true);
             }
         }
     }//GEN-LAST:event_esconderCampos
+
+    private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
+        Conta conta;
+
+        if (jComboBoxTipoConta.getSelectedItem().toString().equalsIgnoreCase("Conta Corrente")) {
+            ContaInvestimento c = new ContaInvestimento();
+            c.setDepositoMinimo(Double.valueOf(jTextFieldDepositoMinimo.getText()));
+            c.setMontanteMinimo(Double.valueOf(jTextFieldMontanteMinimo.getText()));
+            conta = c;
+        } else {
+            ContaCorrente c = new ContaCorrente();
+            c.setLimite(Double.valueOf(jTextFieldLimite.getText()));
+            conta = c;
+        }
+        conta.setDono(cliente.getCodigo());
+        conta.setDepositoInicial(Double.valueOf(jTextFieldDepositoInicial.getText()));
+
+        dao.criaConta(conta);
+
+    }//GEN-LAST:event_jButtonSalvarActionPerformed
     /**
      * @param args the command line arguments
      */
