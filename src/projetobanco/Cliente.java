@@ -10,6 +10,7 @@ package projetobanco;
  * @author Codification
  */
 public class Cliente implements Comparable{
+    private int codigo;
     private String Nome;
     private String sobrenome;
     private String RG;
@@ -94,7 +95,35 @@ public class Cliente implements Comparable{
     @Override
     public int compareTo(Object o) {
         Cliente c = (Cliente) o;
-       return  (int) (c.salario - this.salario);
+       return  (int) (c.getSalario() - this.getSalario());
+    }
+
+    /**
+     * @return the salario
+     */
+    public double getSalario() {
+        return salario;
+    }
+
+    /**
+     * @param salario the salario to set
+     */
+    public void setSalario(double salario) {
+        this.salario = salario;
+    }
+
+    /**
+     * @return the codigo
+     */
+    public int getCodigo() {
+        return codigo;
+    }
+
+    /**
+     * @param codigo the codigo to set
+     */
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
     }
    
 }

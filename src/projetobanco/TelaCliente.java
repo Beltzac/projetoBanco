@@ -7,6 +7,10 @@ package projetobanco;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JTable;
+import java.util.ArrayList;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -17,27 +21,52 @@ public class TelaCliente extends javax.swing.JFrame {
     /**
      * Creates new form TelaCadastro
      */
+    Cliente clienteSelecionado;
+
     public TelaCliente() {
+
         initComponents();
-        
-        jTable1.addMouseListener( new MouseAdapter()
-{
-    @Override
-    public void mouseReleased(MouseEvent e)
-    {
-        if (e.isPopupTrigger())
-        {
-            JTable source = (JTable)e.getSource();
-            int row = source.rowAtPoint( e.getPoint() );
-            int column = source.columnAtPoint( e.getPoint() );
+        DAO dao = new DAO();
+        ModeloTabela model = (ModeloTabela) jTableClientes.getModel();
+        model.setData(dao.pesquisaCliente(""));
 
-            if (! source.isRowSelected(row))
-                source.changeSelection(row, column, false, false);
 
-            jPopupMenu1.show(e.getComponent(), e.getX(), e.getY());
-        }
-    }
-});
+
+
+        jTableClientes.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if (e.isPopupTrigger()) {
+                    JTable source = (JTable) e.getSource();
+                    int row = source.rowAtPoint(e.getPoint());
+                    int column = source.columnAtPoint(e.getPoint());
+
+                    if (!source.isRowSelected(row)) {
+                        source.changeSelection(row, column, false, false);
+                    }
+
+                    jPopupMenu1.show(e.getComponent(), e.getX(), e.getY());
+                }
+            }
+        });
+
+        jTableClientes.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                ModeloTabela model = (ModeloTabela) jTableClientes.getModel();
+                clienteSelecionado = (Cliente) model.getValueAt(jTableClientes.getSelectedRow());
+
+                jTextNome.setText(clienteSelecionado.getNome());
+                jTextSobrenome.setText(clienteSelecionado.getSobrenome());
+                jTextRG.setText(clienteSelecionado.getRG());
+                jTextCPF.setText(clienteSelecionado.getCPF());
+                jTextEndereco.setText(clienteSelecionado.getEndereco());
+                jTextSalario.setText(String.valueOf(clienteSelecionado.getSalario()));
+
+
+
+            }
+        });
     }
 
     /**
@@ -53,7 +82,7 @@ public class TelaCliente extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableClientes = new javax.swing.JTable();
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -89,20 +118,13 @@ public class TelaCliente extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+        jTableClientes.setModel(new ModeloTabela());
+        jTableClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                preencheDados(evt);
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
-
-        jTextField1.setText("jTextField1");
+        });
+        jScrollPane1.setViewportView(jTableClientes);
 
         jButton1.setText("Pesquisar");
 
@@ -135,9 +157,8 @@ public class TelaCliente extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 619, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextField1)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 521, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
@@ -168,7 +189,8 @@ public class TelaCliente extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jTextNome, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
                                     .addComponent(jTextSobrenome))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 619, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -215,11 +237,10 @@ public class TelaCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
-        Cliente c = new Cliente();
-        c.setNome("João da silva");
-        c.setCPF("545.446.454-11");
-        new TelaConta(c).setVisible(true);
+
+        ModeloTabela model = (ModeloTabela) jTableClientes.getModel();
+        new TelaConta((Cliente) model.getValueAt(jTableClientes.getSelectedRow())).setVisible(true);
+
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jTextSobrenomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextSobrenomeActionPerformed
@@ -227,11 +248,14 @@ public class TelaCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextSobrenomeActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        Cliente c = new Cliente();
-        c.setNome("João da silva");
-        c.setCPF("545.446.454-11");
-        new TelaGerenciaConta(c).setVisible(true);
+
+        ModeloTabela model = (ModeloTabela) jTableClientes.getModel();
+        new TelaGerenciaConta((Cliente) model.getValueAt(jTableClientes.getSelectedRow())).setVisible(true);
+
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void preencheDados(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_preencheDados
+    }//GEN-LAST:event_preencheDados
 
     /**
      * @param args the command line arguments
@@ -281,7 +305,7 @@ public class TelaCliente extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableClientes;
     private javax.swing.JTextField jTextCPF;
     private javax.swing.JTextField jTextEndereco;
     private javax.swing.JTextField jTextField1;

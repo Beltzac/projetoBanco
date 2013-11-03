@@ -15,7 +15,7 @@ public class TelaGerenciaConta extends javax.swing.JFrame {
      */
     
     TelaGerenciaConta(Cliente c) {
-              super("Gerenciar Contas - "+c.getNome() +" ("+ c.getCPF()+")");
+              super("Gerenciar Contas - "+c.getNome() +" " +c.getSobrenome() +" ("+ c.getCPF()+")");
               initComponents(); 
     }
 
