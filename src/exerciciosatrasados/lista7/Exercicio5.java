@@ -10,7 +10,7 @@ import java.util.Scanner;
  *
  * @author Codification
  */
-public class Tarefa6 {
+public class Exercicio5 {
 
     public static void main(String[] args) {
         String entrada;
@@ -31,8 +31,7 @@ public class Tarefa6 {
                     continue;
                 }
             }
-        }
-        
+        }        
         System.out.println("Média é:" + (double)soma / contador);
     }
 }

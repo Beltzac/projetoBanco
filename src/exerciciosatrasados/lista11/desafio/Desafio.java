@@ -24,7 +24,7 @@ public class Desafio {
         //print(m3);
 
 
-        for (int i = 1; i <= 24; i++) {
+        for (int i = 1; i <= 10; i++) {
             timer.inicia();
             m3 = multiplica(m1, m2, i);
             timer.para("Multithread " + i);

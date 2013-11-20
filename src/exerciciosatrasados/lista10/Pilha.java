@@ -10,48 +10,52 @@ package exerciciosatrasados.lista10;
  */
 public class Pilha<T> {
 
-    Object[] dados;
-    int ponteiro = 0;
-    int tamanho;
-
-    public Pilha(int tamanho) {
-        this.dados = new Object[tamanho];
-        this.tamanho = tamanho;
-    }
-
-    public Pilha() {
-        this(100);
-    }
-
+    private Nodo n;
+ 
     public void empilha(T i) throws Exception {
-        if (ponteiro < tamanho) {
-            dados[ponteiro] = i;
-            ponteiro++;
-        } else {
-            throw new Exception("Estouro de pilha");
+
+    if (n == null){
+        n = new Nodo(i);
+    }else{
+        Nodo next = n;
+        while(next.getProximo() != null){
+            next = next.getProximo();
         }
+      next.setProximo(new Nodo(i)) ;
+    }
+   
     }
 
     public void desempilha() {
-        if (ponteiro > 0) {
-            ponteiro--;
+    Nodo next = n;
+    Nodo anterior = null;
+        while(next.getProximo() != null){
+            next = next.getProximo();
+            anterior = next;
         }
+      if (anterior != null){
+      anterior.setProximo(null);
+      }
     }
 
     @Override
     public String toString() {
         String texto = "[ ";
 
-        for (int i = 0; i < ponteiro; i++) {
-            texto += dados[i];
-            if (i != ponteiro - 1) {
-                texto += " , ";
-            }
-        }
+        texto += imprime(texto, n);
 
         texto += " ]";
 
         return texto;
 
+    }
+    
+    String imprime(String s, Nodo n){        
+        if(n!= null){
+        s += n.getDado()+" ";
+        imprime(s, n);
+        }
+        
+        return null;        
     }
 }

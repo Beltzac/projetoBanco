@@ -44,3 +44,17 @@ Thread Multithread 21 , 5.354790847
 Thread Multithread 22 , 5.259393354
 Thread Multithread 23 , 5.156888733
 Thread Multithread 24 , 5.131352214
+
+E8400 @ 3.00 GHz
+
+Thread Sequencial , 24.764471829
+Thread Multithread 1 , 27.545867407
+Thread Multithread 2 , 15.711343271
+Thread Multithread 3 , 14.922968161
+Thread Multithread 4 , 12.703715985
+Thread Multithread 5 , 12.520732945
+Thread Multithread 6 , 12.366489962
+Thread Multithread 7 , 13.028567596
+Thread Multithread 8 , 12.546616105
+Thread Multithread 9 , 12.51982034
+Thread Multithread 10 , 12.37125522
