@@ -1,0 +1,46 @@
+Saida, marizes 1500 x 1500
+
+
+i3 540 @ 3.07GHz 
+
+Thread Sequencial , 44.698945061
+Thread Multithread 1 , 44.788569297
+Thread Multithread 2 , 28.51488807
+Thread Multithread 3 , 24.104178895
+Thread Multithread 4 , 22.994381245
+Thread Multithread 5 , 23.545215573
+Thread Multithread 6 , 23.282065769
+Thread Multithread 7 , 23.337968823
+Thread Multithread 8 , 22.856903089
+Thread Multithread 9 , 22.959866795
+Thread Multithread 10 , 22.838602039
+
+
+
+Intel(R) Xeon(R) CPU E5-2620 0 @ 2.00GHz 
+
+Thread Sequencial , 46.424524827
+Thread Multithread 1 , 46.283596594
+Thread Multithread 2 , 23.251902051
+Thread Multithread 3 , 16.872794367
+Thread Multithread 4 , 12.634185428
+Thread Multithread 5 , 10.187424266
+Thread Multithread 6 , 8.762133445
+Thread Multithread 7 , 7.521500511
+Thread Multithread 8 , 6.605206429
+Thread Multithread 9 , 6.046251058
+Thread Multithread 10 , 5.475787609
+Thread Multithread 11 , 4.97744998
+Thread Multithread 12 , 5.125161606
+Thread Multithread 13 , 6.335498449
+Thread Multithread 14 , 5.944020136
+Thread Multithread 15 , 5.789294145
+Thread Multithread 16 , 5.842530169
+Thread Multithread 17 , 5.476300511
+Thread Multithread 18 , 5.185783958
+Thread Multithread 19 , 5.630869884
+Thread Multithread 20 , 5.231113074
+Thread Multithread 21 , 5.354790847
+Thread Multithread 22 , 5.259393354
+Thread Multithread 23 , 5.156888733
+Thread Multithread 24 , 5.131352214
