@@ -32,10 +32,10 @@ public class ContaInvestimento extends Conta {
                 this.setSaldo(getSaldo() - valor);
                 return true;
             } else {
-                JOptionPane.showConfirmDialog(null, "Saldo insulficiente. Ação cancelada.");
+                JOptionPane.showMessageDialog(null, "Saldo insulficiente. Ação cancelada.");
             }
         } else {
-            JOptionPane.showConfirmDialog(null, "Montante Minimo deve ser respeitado. Ação cancelada.");
+            JOptionPane.showMessageDialog(null, "Montante Minimo deve ser respeitado. Ação cancelada.");
         }
         return false;
     }

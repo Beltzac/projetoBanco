@@ -26,7 +26,7 @@ public class ContaCorrente extends Conta {
             this.setSaldo(getSaldo() - valor);
             return true;
         } else {
-            JOptionPane.showConfirmDialog(null, "Saldo insulficiente. Ação cancelada.");
+            JOptionPane.showMessageDialog(null, "Saldo insulficiente. Ação cancelada.");
         }
         return false;
     }

@@ -9,8 +9,8 @@ import java.awt.event.MouseEvent;
 import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -97,7 +97,21 @@ public class TelaCliente extends javax.swing.JFrame {
         ModeloTabela model = (ModeloTabela) jTableClientes.getModel();
         
         try {
+            model.setDataChange(dao.pesquisaCliente(jTextFieldPesquisa.getText()));
+        //}catch(ArrayIndexOutOfBoundsException ea){
+        	
+        } catch (Exception ex) {
+            Logger.getLogger(TelaCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    
+    private void atualizaTabela2() {
+        ModeloTabela model = (ModeloTabela) jTableClientes.getModel();
+        try {
             model.setDataUpdate(dao.pesquisaCliente(jTextFieldPesquisa.getText()));
+        //}catch(ArrayIndexOutOfBoundsException ea){
+        	
         } catch (Exception ex) {
             Logger.getLogger(TelaCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -355,8 +369,13 @@ public class TelaCliente extends javax.swing.JFrame {
             clienteSelecionado.setCPF(jFormattedTextFieldCPF.getText());
             clienteSelecionado.setEndereco(jTextEndereco.getText());
             clienteSelecionado.setSalario(Double.valueOf(jTextFieldSalario.getText()));
-            dao.atualizaCliente(clienteSelecionado);
-            atualizaTabela();
+            try {
+				dao.atualizaCliente(clienteSelecionado);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+            atualizaTabela2();
             JOptionPane.showMessageDialog(null, "Cliente Salvo");
         }
     }//GEN-LAST:event_jButtonSalvarActionPerformed
@@ -365,7 +384,11 @@ public class TelaCliente extends javax.swing.JFrame {
         
         int dialogResult = JOptionPane.showConfirmDialog(null, "Excluir um usuário irá excluir todas as contas que fazem referencia a ele.");
 if(dialogResult == JOptionPane.YES_OPTION){
-    dao.deletaCliente(clienteSelecionado);
+            try {
+                dao.deletaCliente(clienteSelecionado);
+            } catch (Exception ex) {
+                Logger.getLogger(TelaCliente.class.getName()).log(Level.SEVERE, null, ex);
+            }
     atualizaTabela();
 }
         
