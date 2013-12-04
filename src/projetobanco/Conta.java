@@ -13,15 +13,14 @@ public abstract class Conta implements ContaI{
     
 private double depositoInicial; 
 private int numero; 
-private int codigoCliente;
+private int dono;
 private double saldo;
 
 
    
     @Override
-    public Cliente getDono() {
-        DAO dao = new DAO();
-        return dao.carregaCliente(this.codigoCliente);
+    public int getDono() {
+        return this.dono;
     }
 
     @Override
@@ -58,8 +57,8 @@ private double saldo;
     /**
      * @param dono the dono to set
      */
-    public void setDono(int codigoCliente) {
-        this.codigoCliente = codigoCliente;
+    public void setDono(int dono) {
+        this.dono = dono;
     }
 
     /**
