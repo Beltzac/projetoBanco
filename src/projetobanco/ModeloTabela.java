@@ -13,7 +13,7 @@ import javax.swing.table.AbstractTableModel;
  */
 public class ModeloTabela extends AbstractTableModel {
 
-    String[] header = {"Nome", "Sobrenome", "RG", "CPF", "Salário"};
+    String[] header = {"Nome", "Sobrenome", "RG", "CPF", "SalÃ¡rio"};
     ArrayList<Cliente> clientes = new ArrayList<>();//nome sobrenome rg cpf salario
 
     @Override
@@ -53,8 +53,17 @@ public class ModeloTabela extends AbstractTableModel {
 
     }
 
-    public void setData(ArrayList<Cliente> c) {
+    public void setDataUpdate(ArrayList<Cliente> c) {
         clientes = c;
-        fireTableDataChanged();
+        //fireTableDataChanged();
+        this.fireTableRowsUpdated(0,c.size() - 1);
+        //this.fireTableRowsInserted(0,c.size() - 1);
     }
+    
+    public void setDataChange(ArrayList<Cliente> c) {
+        clientes = c;
+        //fireTableDataChanged();
+        this.fireTableRowsInserted(0,c.size() - 1);
+    }
+    
 }
