@@ -13,14 +13,18 @@ CONSTRAINT pkCliente PRIMARY KEY (codigo));
 CREATE TABLE contaCorrente(
 numero int(4) auto_increment,
 cliente int(4),
+saldo double,
 depositoInicial double,
 limite double,
 CONSTRAINT pkContaCorrente PRIMARY KEY (numero),
 CONSTRAINT fkContaCorrenteCliente FOREIGN KEY (cliente) REFERENCES cliente(codigo));
 
+
+
 CREATE TABLE contaInvestimento(
 numero int(4) auto_increment,
 cliente int(4),
+saldo double,
 depositoInicial double,
 montanteMinimo double,
 depositoMinimo double,
