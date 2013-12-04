@@ -23,9 +23,14 @@ public class TelaGerenciaConta extends javax.swing.JFrame {
         super("Gerenciar Conta - " + c.getNome() + " " + c.getSobrenome() + " (" + c.getCPF() + ")");
         cliente = c;
         dao = new DAO();
-        conta = dao.carregaConta(cliente.getCodigo());
+        try {
+			conta = dao.carregaConta(cliente.getCodigo());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         if (conta == null) {
-            JOptionPane.showMessageDialog(null, "Cliente não possui uma conta");
+            JOptionPane.showMessageDialog(null, "Cliente nÃ£o possui uma conta");
             dispose();
         } else {
             initComponents();
@@ -59,7 +64,7 @@ public class TelaGerenciaConta extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Depósito");
+        jButton2.setText("DepÃ³sito");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
