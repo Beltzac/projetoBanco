@@ -9,8 +9,8 @@ import java.awt.event.MouseEvent;
 import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -96,7 +96,21 @@ public class TelaCliente extends javax.swing.JFrame {
     private void atualizaTabela() {
         ModeloTabela model = (ModeloTabela) jTableClientes.getModel();
         try {
-            model.setData(dao.pesquisaCliente(jTextFieldPesquisa.getText()));
+            model.setDataChange(dao.pesquisaCliente(jTextFieldPesquisa.getText()));
+        //}catch(ArrayIndexOutOfBoundsException ea){
+        	
+        } catch (Exception ex) {
+            Logger.getLogger(TelaCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    
+    private void atualizaTabela2() {
+        ModeloTabela model = (ModeloTabela) jTableClientes.getModel();
+        try {
+            model.setDataUpdate(dao.pesquisaCliente(jTextFieldPesquisa.getText()));
+        //}catch(ArrayIndexOutOfBoundsException ea){
+        	
         } catch (Exception ex) {
             Logger.getLogger(TelaCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -192,9 +206,9 @@ public class TelaCliente extends javax.swing.JFrame {
 
         jLabel4.setText("CPF");
 
-        jLabel5.setText("Endereço");
+        jLabel5.setText("EndereÃ§o");
 
-        jLabel6.setText("Salário");
+        jLabel6.setText("SalÃ¡rio");
 
         jTextSobrenome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -350,14 +364,24 @@ public class TelaCliente extends javax.swing.JFrame {
             clienteSelecionado.setCPF(jFormattedTextFieldCPF.getText());
             clienteSelecionado.setEndereco(jTextEndereco.getText());
             clienteSelecionado.setSalario(Double.valueOf(jFormattedTextFieldSalario.getText()));
-            dao.atualizaCliente(clienteSelecionado);
-            atualizaTabela();
+            try {
+				dao.atualizaCliente(clienteSelecionado);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+            atualizaTabela2();
             JOptionPane.showMessageDialog(null, "Cliente Salvo");
         }
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
     private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
-        dao.deletaCliente(clienteSelecionado);
+        try {
+			dao.deletaCliente(clienteSelecionado);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         atualizaTabela();
     }//GEN-LAST:event_jButtonExcluirActionPerformed
 
