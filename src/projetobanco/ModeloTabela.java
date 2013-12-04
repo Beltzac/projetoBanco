@@ -53,17 +53,13 @@ public class ModeloTabela extends AbstractTableModel {
 
     }
 
-    public void setDataUpdate(ArrayList<Cliente> c) {
-        clientes = c;
-        //fireTableDataChanged();
-        this.fireTableRowsUpdated(0,c.size() - 1);
-        //this.fireTableRowsInserted(0,c.size() - 1);
-    }
     
-    public void setDataChange(ArrayList<Cliente> c) {
+    public void setData(ArrayList<Cliente> c) {
         clientes = c;
         //fireTableDataChanged();
-        this.fireTableRowsInserted(0,c.size() - 1);
+        
+        System.out.println(c.toString());
+       
     }
     
 }

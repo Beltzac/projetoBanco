@@ -97,26 +97,17 @@ public class TelaCliente extends javax.swing.JFrame {
         ModeloTabela model = (ModeloTabela) jTableClientes.getModel();
         
         try {
-            model.setDataUpdate(dao.pesquisaCliente(jTextFieldPesquisa.getText()));
+           
+            model.setData(dao.pesquisaCliente(jTextFieldPesquisa.getText()));
+            jTableClientes.revalidate();
+           // model.fireTableDataChanged();
         //}catch(ArrayIndexOutOfBoundsException ea){
         	
         } catch (Exception ex) {
             Logger.getLogger(TelaCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }   
 
-    }
-    
-    private void atualizaTabela2() {
-        ModeloTabela model = (ModeloTabela) jTableClientes.getModel();
-        try {
-            model.setDataUpdate(dao.pesquisaCliente(jTextFieldPesquisa.getText()));
-        //}catch(ArrayIndexOutOfBoundsException ea){
-        	
-        } catch (Exception ex) {
-            Logger.getLogger(TelaCliente.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -375,7 +366,7 @@ public class TelaCliente extends javax.swing.JFrame {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-            atualizaTabela2();
+            atualizaTabela();
             JOptionPane.showMessageDialog(null, "Cliente Salvo");
         }
     }//GEN-LAST:event_jButtonSalvarActionPerformed
