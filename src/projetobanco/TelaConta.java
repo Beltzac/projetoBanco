@@ -4,6 +4,8 @@
  */
 package projetobanco;
 
+import java.awt.HeadlessException;
+
 import javax.swing.JOptionPane;
 
 /**
@@ -22,13 +24,21 @@ public class TelaConta extends javax.swing.JFrame {
         super("Nova Conta - " + c.getNome() + " " + c.getSobrenome() + " (" + c.getCPF() + ")");
         cliente = c;
         dao = new DAO();
-        if (dao.carregaConta(c.getCodigo()) != null) {
-            JOptionPane.showMessageDialog(null, "Cliente ja possui uma conta");
-            dispose();
-        } else {
-            initComponents();
-            setVisible(true);
-        }
+        try {
+			if (dao.carregaConta(c.getCodigo()) != null) {
+			    JOptionPane.showMessageDialog(null, "Cliente ja possui uma conta");
+			    dispose();
+			} else {
+			    initComponents();
+			    setVisible(true);
+			}
+		} catch (HeadlessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     /**
@@ -71,15 +81,15 @@ public class TelaConta extends javax.swing.JFrame {
 
         jLabel1.setText("Tipo da conta");
 
-        jLabel2.setText("Depósito Inicial");
+        jLabel2.setText("DepÃ³sito Inicial");
 
         jLabel3.setText("Limite");
 
-        jLabel4.setText("Montante Mínimo");
+        jLabel4.setText("Montante MÃ­nimo");
 
         jTextFieldMontanteMinimo.setEnabled(false);
 
-        jLabel5.setText("Depósito Mínimo ");
+        jLabel5.setText("DepÃ³sito MÃ­nimo ");
 
         jTextFieldDepositoMinimo.setEnabled(false);
         jTextFieldDepositoMinimo.addActionListener(new java.awt.event.ActionListener() {
@@ -187,22 +197,29 @@ public class TelaConta extends javax.swing.JFrame {
     }//GEN-LAST:event_esconderCampos
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
-        Conta conta;
 
-        if (jComboBoxTipoConta.getSelectedItem().toString().equalsIgnoreCase("Conta Corrente")) {
-            ContaInvestimento c = new ContaInvestimento();
-            c.setDepositoMinimo(Double.valueOf(jTextFieldDepositoMinimo.getText()));
-            c.setMontanteMinimo(Double.valueOf(jTextFieldMontanteMinimo.getText()));
-            conta = c;
-        } else {
-            ContaCorrente c = new ContaCorrente();
-            c.setLimite(Double.valueOf(jTextFieldLimite.getText()));
-            conta = c;
-        }
-        conta.setDono(cliente.getCodigo());
-        conta.setDepositoInicial(Double.valueOf(jTextFieldDepositoInicial.getText()));
-
-        dao.criaConta(conta);
+    	try{
+	    	if (jComboBoxTipoConta.getSelectedItem().toString().equalsIgnoreCase("Conta Corrente")) {
+	        	ContaCorrente c = new ContaCorrente();
+	            c.setLimite(Double.valueOf(jTextFieldLimite.getText()));
+	            c.setDono(cliente.getCodigo());
+	            c.setDepositoInicial(Double.valueOf(jTextFieldDepositoInicial.getText()));
+	            c.setSaldo(Double.valueOf(jTextFieldDepositoInicial.getText()));
+	            dao.criaContaCorrente(c);
+	        } else {
+	            ContaInvestimento c = new ContaInvestimento();
+	            c.setDepositoMinimo(Double.valueOf(jTextFieldDepositoMinimo.getText()));
+	            c.setMontanteMinimo(Double.valueOf(jTextFieldMontanteMinimo.getText()));
+	            c.setDono(cliente.getCodigo());
+	            c.setDepositoInicial(Double.valueOf(jTextFieldDepositoInicial.getText()));
+	            c.setSaldo(Double.valueOf(jTextFieldDepositoInicial.getText()));
+	            dao.criaContaInvestimento(c);
+	        }
+    	}catch(NumberFormatException ex1){
+    		//Se alguma string estiver vazia não realiza nenhuma ação
+    	}catch(Exception ex){
+    		ex.printStackTrace();
+    	}
 
     }//GEN-LAST:event_jButtonSalvarActionPerformed
     /**
