@@ -59,8 +59,6 @@ public class DAO {
                 c.add(cliente);
             }
         }
-
-
         return c;
     }
 
@@ -92,19 +90,48 @@ public class DAO {
         return conta;
     }
 
-    public void deletaConta(int codigoConta) {
+    public void deletaContaCorrente(int codigoConta) throws Exception{
+    	PreparedStatement stmt = con.prepareStatement("DELETE FROM contaCorrente WHERE numero = ?");
+        stmt.setInt(1, codigoConta);
+        stmt.executeUpdate();
+    }
+    
+    public void deletaContaInvestimento(int codigoConta) throws Exception{
+    	PreparedStatement stmt = con.prepareStatement("DELETE FROM contaInvestimento WHERE numero = ?");
+        stmt.setInt(1, codigoConta);
+        stmt.executeUpdate();
     }
 
-    void atualizaConta(Conta conta) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    void atualizaConta(Conta conta) throws Exception{
+    	PreparedStatement stmt = con.prepareStatement("UPDATE contaInvestimento SET saldo = ? WHERE cliente = ?");
+        stmt.setDouble(1, conta.getSaldo());
+        stmt.setInt(2, conta.getDono().getCodigo());
+        stmt.executeUpdate();
     }
 
-    void atualizaCliente(Cliente cliente) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    void atualizaCliente(Cliente cliente) throws Exception{
+    	PreparedStatement stmt = con.prepareStatement("UPDATE cliente SET nome = ?,sobreNome = ?,rg = ?,cpf = ?,endereco = ?,salario = ? WHERE codigo = ?");
+        stmt.setString(1, cliente.getNome());
+        stmt.setString(2, cliente.getSobrenome());
+        stmt.setString(3, cliente.getRG());
+        stmt.setString(4, cliente.getCPF());
+        stmt.setString(5, cliente.getEndereco());
+        stmt.setDouble(6, cliente.getSalario());
+        stmt.setDouble(7, cliente.getCodigo());
+        stmt.executeUpdate();
     }
 
-    void deletaCliente(Cliente cliente) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    void deletaCliente(Cliente cliente) throws Exception{
+    	PreparedStatement stmt = con.prepareStatement("DELETE FROM contaCorrente WHERE cliente = ?");
+        stmt.setInt(1, cliente.getCodigo());
+        stmt.executeUpdate();
+        stmt = con.prepareStatement("DELETE FROM contaInvestimento WHERE cliente = ?");
+        stmt.setInt(1, cliente.getCodigo());
+        stmt.executeUpdate();
+    	stmt = con.prepareStatement("DELETE FROM cliente WHERE codigo = ?");
+        stmt.setInt(1, cliente.getCodigo());
+        stmt.executeUpdate();
+        
     }
 
     void criaContaCorrente(Conta conta) throws Exception {
