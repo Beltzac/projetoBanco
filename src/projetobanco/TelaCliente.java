@@ -88,15 +88,16 @@ public class TelaCliente extends javax.swing.JFrame {
                 jFormattedTextFieldRG.setText(clienteSelecionado.getRG());
                 jFormattedTextFieldCPF.setText(clienteSelecionado.getCPF());
                 jTextEndereco.setText(clienteSelecionado.getEndereco());
-                jFormattedTextFieldSalario.setText(String.valueOf(clienteSelecionado.getSalario()));
+                jTextFieldSalario.setText(String.valueOf(clienteSelecionado.getSalario()));
             }
         });
     }
 
     private void atualizaTabela() {
         ModeloTabela model = (ModeloTabela) jTableClientes.getModel();
+        
         try {
-            model.setData(dao.pesquisaCliente(jTextFieldPesquisa.getText()));
+            model.setDataUpdate(dao.pesquisaCliente(jTextFieldPesquisa.getText()));
         } catch (Exception ex) {
             Logger.getLogger(TelaCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -132,9 +133,9 @@ public class TelaCliente extends javax.swing.JFrame {
         jTextEndereco = new javax.swing.JTextField();
         jFormattedTextFieldRG = new javax.swing.JFormattedTextField();
         jFormattedTextFieldCPF = new javax.swing.JFormattedTextField();
-        jFormattedTextFieldSalario = new javax.swing.JFormattedTextField();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jTextFieldSalario = new javax.swing.JTextField();
 
         jMenuItem1.setText("Nova Conta...");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
@@ -152,7 +153,7 @@ public class TelaCliente extends javax.swing.JFrame {
         });
         jPopupMenu1.add(jMenuItem2);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cliente");
 
         jTableClientes.setModel(new ModeloTabela());
@@ -214,8 +215,6 @@ public class TelaCliente extends javax.swing.JFrame {
             ex.printStackTrace();
         }
 
-        jFormattedTextFieldSalario.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
-
         jButton2.setText("Novo");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -227,6 +226,12 @@ public class TelaCliente extends javax.swing.JFrame {
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
+            }
+        });
+
+        jTextFieldSalario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldSalarioActionPerformed(evt);
             }
         });
 
@@ -263,7 +268,7 @@ public class TelaCliente extends javax.swing.JFrame {
                                         .addComponent(jTextEndereco)
                                         .addComponent(jFormattedTextFieldRG)
                                         .addComponent(jFormattedTextFieldCPF, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
-                                        .addComponent(jFormattedTextFieldSalario))))
+                                        .addComponent(jTextFieldSalario))))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jButton2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -308,7 +313,7 @@ public class TelaCliente extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jFormattedTextFieldSalario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldSalario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonSalvar)
@@ -349,7 +354,7 @@ public class TelaCliente extends javax.swing.JFrame {
             clienteSelecionado.setRG(jFormattedTextFieldRG.getText());
             clienteSelecionado.setCPF(jFormattedTextFieldCPF.getText());
             clienteSelecionado.setEndereco(jTextEndereco.getText());
-            clienteSelecionado.setSalario(Double.valueOf(jFormattedTextFieldSalario.getText()));
+            clienteSelecionado.setSalario(Double.valueOf(jTextFieldSalario.getText()));
             dao.atualizaCliente(clienteSelecionado);
             atualizaTabela();
             JOptionPane.showMessageDialog(null, "Cliente Salvo");
@@ -357,8 +362,13 @@ public class TelaCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
     private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
-        dao.deletaCliente(clienteSelecionado);
-        atualizaTabela();
+        
+        int dialogResult = JOptionPane.showConfirmDialog(null, "Excluir um usuário irá excluir todas as contas que fazem referencia a ele.");
+if(dialogResult == JOptionPane.YES_OPTION){
+    dao.deletaCliente(clienteSelecionado);
+    atualizaTabela();
+}
+        
     }//GEN-LAST:event_jButtonExcluirActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -373,14 +383,15 @@ public class TelaCliente extends javax.swing.JFrame {
             cliente.setRG(jFormattedTextFieldRG.getText());
             cliente.setCPF(jFormattedTextFieldCPF.getText());
             cliente.setEndereco(jTextEndereco.getText());
-            cliente.setSalario(Double.valueOf(jFormattedTextFieldSalario.getText()));
+            cliente.setSalario(Double.valueOf(jTextFieldSalario.getText()));
 
             dao.criaCliente(cliente);
             JOptionPane.showMessageDialog(null, "Cliente criado");
+            atualizaTabela();
         } catch (Exception exception) {
             JOptionPane.showMessageDialog(null, "Falha ao criar cliente: " + exception);
         }
-        atualizaTabela();
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -389,8 +400,13 @@ public class TelaCliente extends javax.swing.JFrame {
         jFormattedTextFieldRG.setText("");
         jFormattedTextFieldCPF.setText("");
         jTextEndereco.setText("");
-        jFormattedTextFieldSalario.setText("");
+        jTextFieldSalario.setText("");
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jTextFieldSalarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldSalarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldSalarioActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -399,7 +415,6 @@ public class TelaCliente extends javax.swing.JFrame {
     private javax.swing.JButton jButtonSalvar;
     private javax.swing.JFormattedTextField jFormattedTextFieldCPF;
     private javax.swing.JFormattedTextField jFormattedTextFieldRG;
-    private javax.swing.JFormattedTextField jFormattedTextFieldSalario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -413,6 +428,7 @@ public class TelaCliente extends javax.swing.JFrame {
     private javax.swing.JTable jTableClientes;
     private javax.swing.JTextField jTextEndereco;
     private javax.swing.JTextField jTextFieldPesquisa;
+    private javax.swing.JTextField jTextFieldSalario;
     private javax.swing.JTextField jTextNome;
     private javax.swing.JTextField jTextSobrenome;
     // End of variables declaration//GEN-END:variables
