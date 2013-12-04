@@ -2,10 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package projetobanco;
+package src;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -50,7 +51,6 @@ public class TelaCliente extends javax.swing.JFrame {
             public void valueChanged(ListSelectionEvent e) {
                 ModeloTabela model = (ModeloTabela) jTableClientes.getModel();
                 clienteSelecionado = (Cliente) model.getValueAt(jTableClientes.getSelectedRow());
-
                 jTextNome.setText(clienteSelecionado.getNome());
                 jTextSobrenome.setText(clienteSelecionado.getSobrenome());
                 jFormattedTextFieldRG.setText(clienteSelecionado.getRG());
@@ -61,9 +61,14 @@ public class TelaCliente extends javax.swing.JFrame {
         });
     }
 
-    private void atualizaTabela() {
+    private void atualizaTabela(){
         ModeloTabela model = (ModeloTabela) jTableClientes.getModel();
-        model.setData(dao.pesquisaCliente(jTextFieldPesquisa.getText()));
+        try {
+			model.setData(dao.pesquisaCliente(jTextFieldPesquisa.getText()));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     /**
@@ -155,9 +160,9 @@ public class TelaCliente extends javax.swing.JFrame {
 
         jLabel4.setText("CPF");
 
-        jLabel5.setText("Endereço");
+        jLabel5.setText("EndereÃ§o");
 
-        jLabel6.setText("Salário");
+        jLabel6.setText("SalÃ¡rio");
 
         jTextSobrenome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -177,12 +182,15 @@ public class TelaCliente extends javax.swing.JFrame {
             ex.printStackTrace();
         }
 
-        jFormattedTextFieldSalario.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
-
         jButton2.setText("Novo");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButton2.addActionListener(new java.awt.event.ActionListener(){
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                try {
+					jButton2ActionPerformed(evt);
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
             }
         });
 
@@ -306,7 +314,6 @@ public class TelaCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_preencheDados
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
-
         clienteSelecionado.setNome(jTextNome.getText());
         clienteSelecionado.setSobrenome(jTextSobrenome.getText());
         clienteSelecionado.setRG(jFormattedTextFieldRG.getText());
@@ -326,7 +333,7 @@ public class TelaCliente extends javax.swing.JFrame {
         atualizaTabela();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) throws Exception{//GEN-FIRST:event_jButton2ActionPerformed
         Cliente cliente = new Cliente();
         cliente.setNome(jTextNome.getText());
         cliente.setSobrenome(jTextSobrenome.getText());
@@ -334,7 +341,7 @@ public class TelaCliente extends javax.swing.JFrame {
         cliente.setCPF(jFormattedTextFieldCPF.getText());
         cliente.setEndereco(jTextEndereco.getText());
         cliente.setSalario(Double.valueOf(jFormattedTextFieldSalario.getText()));
-        dao.atualizaCliente(cliente);
+        dao.criaCliente(cliente);
         atualizaTabela();
     }//GEN-LAST:event_jButton2ActionPerformed
 
