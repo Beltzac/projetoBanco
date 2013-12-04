@@ -20,9 +20,10 @@ public class ContaInvestimento extends Conta {
         if (valor >= depositoMinimo) {
             this.setSaldo(getSaldo() + valor);
             return true;
+        }else{
+            JOptionPane.showMessageDialog(null, "O depósito tem um valor minimo de " + this.depositoMinimo + ". Ação cancelada.");
         }
         return false;
-
     }
 
     @Override

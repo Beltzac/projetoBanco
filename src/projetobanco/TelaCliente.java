@@ -97,7 +97,7 @@ public class TelaCliente extends javax.swing.JFrame {
         ModeloTabela model = (ModeloTabela) jTableClientes.getModel();
         
         try {
-            model.setDataChange(dao.pesquisaCliente(jTextFieldPesquisa.getText()));
+            model.setDataUpdate(dao.pesquisaCliente(jTextFieldPesquisa.getText()));
         //}catch(ArrayIndexOutOfBoundsException ea){
         	
         } catch (Exception ex) {
