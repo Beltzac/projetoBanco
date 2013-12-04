@@ -142,13 +142,13 @@ public class Cliente implements Comparable<Cliente> {
             }
 
         } else if (CAMPO_ORDENACAO == campoOrdenacao.sobrenome) {
-                   if (DIRECAO_ORDENACAO == direcaoOrdenacao.ASCENDING) {
+            if (DIRECAO_ORDENACAO == direcaoOrdenacao.ASCENDING) {
                 return this.sobrenome.compareTo(o.sobrenome);
             } else {
                 return o.sobrenome.compareTo(this.sobrenome);
             }
         } else if (CAMPO_ORDENACAO == campoOrdenacao.salario) {
-                   if (DIRECAO_ORDENACAO == direcaoOrdenacao.ASCENDING) {
+            if (DIRECAO_ORDENACAO == direcaoOrdenacao.ASCENDING) {
                 return (int) (this.salario - o.salario);
             } else {
                 return (int) (o.salario - this.salario);

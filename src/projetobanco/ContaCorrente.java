@@ -1,29 +1,39 @@
 package projetobanco;
 
+import javax.swing.JOptionPane;
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Codification
  */
-public class ContaCorrente extends Conta{
-private double limite;
+public class ContaCorrente extends Conta {
+
+    private double limite;
+
     @Override
     public boolean deposita(double valor) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.setSaldo(getSaldo() + valor);
+        return true;
     }
 
     @Override
     public boolean saca(double valor) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if ((getSaldo() - valor) > 0) {
+            this.setSaldo(getSaldo() - valor);
+            return true;
+        } else {
+            JOptionPane.showConfirmDialog(null, "Saldo insulficiente. Ação cancelada.");
+        }
+        return false;
     }
 
     @Override
     public void remunera() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.setSaldo(getSaldo() + getDono().getSalario());
     }
 
     /**
@@ -39,5 +49,4 @@ private double limite;
     public void setLimite(double limite) {
         this.limite = limite;
     }
-    
 }

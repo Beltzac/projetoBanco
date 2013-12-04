@@ -24,11 +24,11 @@ public class TelaGerenciaConta extends javax.swing.JFrame {
         cliente = c;
         dao = new DAO();
         try {
-			conta = dao.carregaConta(cliente.getCodigo());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+            conta = dao.carregaConta(cliente.getCodigo());
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         if (conta == null) {
             JOptionPane.showMessageDialog(null, "Cliente nÃ£o possui uma conta");
             dispose();
@@ -126,13 +126,28 @@ public class TelaGerenciaConta extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        conta.saca(Double.valueOf(jTextFieldValor.getText()));
-        dao.atualizaConta(conta);
+        if (!jTextFieldValor.getText().isEmpty()) {
+            try {
+                conta.saca(Double.valueOf(jTextFieldValor.getText()));
+                dao.atualizaConta(conta);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Digite um valor valido");
+            }
+        }
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        conta.deposita(Double.valueOf(jTextFieldValor.getText()));
-        dao.atualizaConta(conta);
+
+        if (!jTextFieldValor.getText().isEmpty()) {
+            try {
+                conta.deposita(Double.valueOf(jTextFieldValor.getText()));
+                dao.atualizaConta(conta);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Digite um valor valido");
+            }
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -140,8 +155,16 @@ public class TelaGerenciaConta extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        conta.remunera();
-        dao.atualizaConta(conta);
+
+        if (!jTextFieldValor.getText().isEmpty()) {
+            try {
+                conta.remunera();
+                dao.atualizaConta(conta);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Digite um valor valido");
+            }
+        }
+
     }//GEN-LAST:event_jButton4ActionPerformed
     /**
      * @param args the command line arguments

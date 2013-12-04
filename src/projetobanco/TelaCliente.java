@@ -6,6 +6,10 @@ package projetobanco;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Collections;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
@@ -28,6 +32,34 @@ public class TelaCliente extends javax.swing.JFrame {
         initComponents();
         dao = new DAO();
         atualizaTabela();
+
+        jTableClientes.getTableHeader().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                ModeloTabela model = (ModeloTabela) jTableClientes.getModel();
+
+                int index = jTableClientes.convertColumnIndexToModel(jTableClientes.columnAtPoint(e.getPoint()));
+
+                if (index == 0) {
+                    Cliente.CAMPO_ORDENACAO = Cliente.campoOrdenacao.nome;
+                } else if (index == 1) {
+                    Cliente.CAMPO_ORDENACAO = Cliente.campoOrdenacao.sobrenome;
+                } else if (index == 4) {
+                    Cliente.CAMPO_ORDENACAO = Cliente.campoOrdenacao.salario;
+                }
+
+
+                Collections.sort(model.clientes);
+
+
+                if (Cliente.DIRECAO_ORDENACAO == Cliente.direcaoOrdenacao.ASCENDING) {
+                    Cliente.DIRECAO_ORDENACAO = Cliente.direcaoOrdenacao.DESCENDING;
+                } else {
+                    Cliente.DIRECAO_ORDENACAO = Cliente.direcaoOrdenacao.ASCENDING;
+                }
+            }
+        });
+
 
         jTableClientes.addMouseListener(new MouseAdapter() {
             @Override
@@ -61,14 +93,14 @@ public class TelaCliente extends javax.swing.JFrame {
         });
     }
 
-    private void atualizaTabela(){
+    private void atualizaTabela() {
         ModeloTabela model = (ModeloTabela) jTableClientes.getModel();
         try {
-			model.setData(dao.pesquisaCliente(jTextFieldPesquisa.getText()));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+            model.setData(dao.pesquisaCliente(jTextFieldPesquisa.getText()));
+        } catch (Exception ex) {
+            Logger.getLogger(TelaCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     /**
@@ -160,9 +192,9 @@ public class TelaCliente extends javax.swing.JFrame {
 
         jLabel4.setText("CPF");
 
-        jLabel5.setText("EndereÃ§o");
+        jLabel5.setText("Endereço");
 
-        jLabel6.setText("SalÃ¡rio");
+        jLabel6.setText("Salário");
 
         jTextSobrenome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -182,17 +214,12 @@ public class TelaCliente extends javax.swing.JFrame {
             ex.printStackTrace();
         }
 
+        jFormattedTextFieldSalario.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
+
         jButton2.setText("Novo");
-        jButton2.addActionListener(new java.awt.event.ActionListener(){
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                try {
-					jButton2ActionPerformed(evt);
-					
-				}catch (NumberFormatException ex){
-					//Caso as strings estejam vazias não realiza nenhuma ação
-				}catch (Exception e) {
-					e.printStackTrace();
-				}
+                jButton2ActionPerformed(evt);
             }
         });
 
@@ -316,14 +343,17 @@ public class TelaCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_preencheDados
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
-        clienteSelecionado.setNome(jTextNome.getText());
-        clienteSelecionado.setSobrenome(jTextSobrenome.getText());
-        clienteSelecionado.setRG(jFormattedTextFieldRG.getText());
-        clienteSelecionado.setCPF(jFormattedTextFieldCPF.getText());
-        clienteSelecionado.setEndereco(jTextEndereco.getText());
-        clienteSelecionado.setSalario(Double.valueOf(jFormattedTextFieldSalario.getText()));
-        dao.atualizaCliente(clienteSelecionado);
-        atualizaTabela();
+        if (clienteSelecionado != null) {
+            clienteSelecionado.setNome(jTextNome.getText());
+            clienteSelecionado.setSobrenome(jTextSobrenome.getText());
+            clienteSelecionado.setRG(jFormattedTextFieldRG.getText());
+            clienteSelecionado.setCPF(jFormattedTextFieldCPF.getText());
+            clienteSelecionado.setEndereco(jTextEndereco.getText());
+            clienteSelecionado.setSalario(Double.valueOf(jFormattedTextFieldSalario.getText()));
+            dao.atualizaCliente(clienteSelecionado);
+            atualizaTabela();
+            JOptionPane.showMessageDialog(null, "Cliente Salvo");
+        }
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
     private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
@@ -335,15 +365,21 @@ public class TelaCliente extends javax.swing.JFrame {
         atualizaTabela();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) throws Exception{//GEN-FIRST:event_jButton2ActionPerformed
-        Cliente cliente = new Cliente();
-        cliente.setNome(jTextNome.getText());
-        cliente.setSobrenome(jTextSobrenome.getText());
-        cliente.setRG(jFormattedTextFieldRG.getText());
-        cliente.setCPF(jFormattedTextFieldCPF.getText());
-        cliente.setEndereco(jTextEndereco.getText());
-        cliente.setSalario(Double.valueOf(jFormattedTextFieldSalario.getText()));
-        dao.criaCliente(cliente);
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt){//GEN-FIRST:event_jButton2ActionPerformed
+        try {
+            Cliente cliente = new Cliente();
+            cliente.setNome(jTextNome.getText());
+            cliente.setSobrenome(jTextSobrenome.getText());
+            cliente.setRG(jFormattedTextFieldRG.getText());
+            cliente.setCPF(jFormattedTextFieldCPF.getText());
+            cliente.setEndereco(jTextEndereco.getText());
+            cliente.setSalario(Double.valueOf(jFormattedTextFieldSalario.getText()));
+
+            dao.criaCliente(cliente);
+            JOptionPane.showMessageDialog(null, "Cliente criado");
+        } catch (Exception exception) {
+            JOptionPane.showMessageDialog(null, "Falha ao criar cliente: " + exception);
+        }
         atualizaTabela();
     }//GEN-LAST:event_jButton2ActionPerformed
 
