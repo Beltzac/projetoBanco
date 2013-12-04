@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package src;
+package projetobanco;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -188,7 +188,9 @@ public class TelaCliente extends javax.swing.JFrame {
                 try {
 					jButton2ActionPerformed(evt);
 					
-				} catch (Exception e) {
+				}catch (NumberFormatException ex){
+					//Caso as strings estejam vazias não realiza nenhuma ação
+				}catch (Exception e) {
 					e.printStackTrace();
 				}
             }
