@@ -20,10 +20,20 @@ import java.util.logging.Logger;
  */
 public class FileDAO implements IDAO {
 
-    String arquivo;
+   private String arquivo;
+   private int biggestID;
 
     public FileDAO() {
         arquivo = Config.prop.getProperty("file");
+       try {
+           ArrayList<Cliente> c = carregarListaClientes();
+           for (Cliente cliente : c) {
+               if(cliente.getCodigo()>biggestID)
+                   biggestID =cliente.getCodigo();
+           }
+       } catch (Exception ex) {
+           Logger.getLogger(FileDAO.class.getName()).log(Level.SEVERE, null, ex);
+       }
     }
 
     private ArrayList<Cliente> carregarListaClientes() throws Exception {
@@ -79,6 +89,8 @@ public class FileDAO implements IDAO {
     @Override
     public void criaCliente(Cliente cliente) throws Exception {
         ArrayList<Cliente> c = carregarListaClientes();
+        cliente.setCodigo(biggestID+1);
+        biggestID++;
         c.add(cliente);
         gravaListaClientes(c);
     }
@@ -140,7 +152,8 @@ public class FileDAO implements IDAO {
 
     @Override
     public void atualizaCliente(Cliente cliente) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       deletaCliente(cliente);
+       criaCliente(cliente);
     }
 
     @Override
