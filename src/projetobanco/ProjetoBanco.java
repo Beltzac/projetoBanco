@@ -15,6 +15,7 @@ public class ProjetoBanco {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        Config.load();
         new TelaCliente().setVisible(true);
     }
 }

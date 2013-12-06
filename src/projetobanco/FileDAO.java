@@ -23,7 +23,7 @@ public class FileDAO implements IDAO {
     String arquivo;
 
     public FileDAO() {
-        arquivo = "File.txt";
+        arquivo = Config.prop.getProperty("file");
     }
 
     private ArrayList<Cliente> carregarListaClientes() throws Exception {
@@ -37,9 +37,14 @@ public class FileDAO implements IDAO {
             while (line != null) {
                 System.out.println(line);
                 String[] split = line.split(";");
+                for (String string : split) {
+                    System.out.println(string);
+                }
+                
+                
 
                 Cliente cliente = new Cliente();
-                cliente.setCodigo(Integer.getInteger(split[0]));
+                cliente.setCodigo(Integer.parseInt(split[0]));
                 cliente.setNome(split[1]);
                 cliente.setSobrenome(split[2]);
                 cliente.setRG(split[3]);
@@ -81,11 +86,12 @@ public class FileDAO implements IDAO {
     @Override
     public void deletaCliente(Cliente cliente) throws Exception {
         ArrayList<Cliente> c = carregarListaClientes();
-        for (Cliente cliente1 : c) {
-            if (cliente1.getCodigo() == cliente.getCodigo()) {
-                c.remove(cliente1);
-            }
+        
+        for (int i = 0; i < c.size(); i++) {
+            if (c.get(i).getCodigo() == cliente.getCodigo())
+            c.remove(i);          
         }
+ 
         gravaListaClientes(c);
     }
 
