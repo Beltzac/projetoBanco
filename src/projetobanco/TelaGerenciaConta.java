@@ -32,7 +32,7 @@ public class TelaGerenciaConta extends javax.swing.JFrame {
             e.printStackTrace();
         }
         if (conta == null) {
-            JOptionPane.showMessageDialog(null, "Cliente nÃ£o possui uma conta");
+            JOptionPane.showMessageDialog(null, "Cliente nÃƒÂ£o possui uma conta");
             dispose();
         } else {
             initComponents();
@@ -173,14 +173,12 @@ public class TelaGerenciaConta extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
 
-        if (!jTextFieldValor.getText().isEmpty()) {
             try {
                 conta.remunera();
                 dao.atualizaConta(conta);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Digite um valor valido");
             }
-        }
 
     }//GEN-LAST:event_jButton4ActionPerformed
 
