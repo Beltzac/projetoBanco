@@ -103,7 +103,12 @@ public class DAO {
     }
 
     void atualizaConta(Conta conta) throws Exception{
-    	PreparedStatement stmt = con.prepareStatement("UPDATE contaInvestimento SET saldo = ? WHERE cliente = ?");
+    	PreparedStatement stmt;
+    	if(conta instanceof ContaInvestimento){
+    		stmt = con.prepareStatement("UPDATE contaInvestimento SET saldo = ? WHERE cliente = ?");
+    	}else{
+    		stmt = con.prepareStatement("UPDATE contaCorrente SET saldo = ? WHERE cliente = ?");
+    	}
         stmt.setDouble(1, conta.getSaldo());
         stmt.setInt(2, conta.getDono().getCodigo());
         stmt.executeUpdate();
